@@ -26,10 +26,19 @@ const setUpFirebase = () => {
     storageBucket: getFirebaseStorageBucket(),
     messagingSenderId: getFirebaseMessagingSenderId()
   }
+
+  //var configStr = configFirebase.authDomain + "\n" +
+  //  configFirebase.databaseURL + "\n" +
+  //  configFirebase.projectId + "\n" +
+  //  configFirebase.storageBucket + "\n" +
+  //  configFirebase.messagingSenderId + "\n";
+  //alert(configStr);
+
   if (!firebase.apps.length) {
     firebase.initializeApp(configFirebase)
   }
-  return firebase.messaging()
+
+  return firebase.messaging();
 }
 
 export const authPushNotificationService = async (pushToken, privateKey) => {
@@ -49,6 +58,7 @@ export const authPushNotificationService = async (pushToken, privateKey) => {
     })
     return response && response.status === 201
   } catch (err) {
+    alert(err);
     console.error(err)
     return false
   }

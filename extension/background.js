@@ -11,6 +11,7 @@ import {
   addTransaction,
   removeAllTransactions
 } from 'actions/transactions'
+import { signMessage } from 'actions/messages'
 import { SAFE_ALREADY_EXISTS } from '../config/messages'
 import { ADDRESS_ZERO } from '../app/utils/helpers'
 
@@ -59,6 +60,12 @@ chrome.runtime.onMessage.addListener(
       case messages.MSG_SHOW_POPUP_TX:
         if (isWhiteListedDapp(normalizeUrl(sender.tab.url))) {
           showSendTransactionPopup(request.tx, sender.tab.windowId, sender.tab.id)
+        }
+        break
+
+      case messages.MSG_SIGN_MESSAGE:
+        if (isWhiteListedDapp(normalizeUrl(sender.tab.url))) {
+          signMessagePrivate(request.msg_data, sender.tab.windowId, sender.tab.id)
         }
         break
 
@@ -125,7 +132,7 @@ const showTransactionPopup = (transaction, dappWindowId, dappTabId) => {
   }
   if (transaction.gasToken === '0' || transaction.gasToken === '0x' || transaction.gasToken === '0x0') {
     transaction.gasToken = ADDRESS_ZERO
-  } 
+  }
 
   const validTransaction = safes.filter(safe => safe.address.toLowerCase() === transaction.from.toLowerCase()).length > 0
   if (!validTransaction) {
@@ -145,6 +152,46 @@ const showTransactionPopup = (transaction, dappWindowId, dappTabId) => {
 
   storageController.getStore().dispatch(addTransaction(transaction, null, dappWindowId, dappTabId))
   popupController.focusPopup()
+}
+
+
+/*
+export const generatePairingCodeContent = (privateKey) => {
+  const startDate = new Date()
+  const expirationDate = new Date(startDate.setMinutes(startDate.getMinutes() + 10))
+  const formatedExpirationDate = expirationDate.toISOString().split('.')[0] + '+00:00'
+
+  const data = EthUtil.sha3('GNO' + formatedExpirationDate)
+  const vrs = EthUtil.ecsign(data, privateKey)
+  const r = new BigNumber(EthUtil.bufferToHex(vrs.r))
+  const s = new BigNumber(EthUtil.bufferToHex(vrs.s))
+  const pairingCodeContent = JSON.stringify({
+    expirationDate: formatedExpirationDate,
+    signature: {
+      r: r.toString(10),
+      s: s.toString(10),
+      v: vrs.v
+    }
+  })
+  return pairingCodeContent
+}
+
+*/
+
+const signMessagePrivate = (msg_data, dappWindowId, dappTabId) => {
+
+  chrome.tabs.query({ windowId: dappWindowId }, function (tabs) {
+    chrome.tabs.sendMessage(dappTabId, {
+      msg: messages.MSG_MESSAGE_SIGNED,
+      original_data: msg_data,
+      signature: {
+        r: "111",
+        s: "222",
+        v: 27
+      }
+    })
+  })
+
 }
 
 const showConfirmTransactionPopup = (transaction) => {

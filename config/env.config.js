@@ -30,14 +30,14 @@ const rinkebyStagingIos = 'https://betas.to/7TovLG11'
 const rinkebyTokenListUrl = 'https://gist.githubusercontent.com/rmeissner/98911fcf74b0ea9731e2dae2441c97a4/raw/'
 const mainnetTokenListUrl = 'https://raw.githubusercontent.com/rmeissner/crypto_resources/master/tokens/mainnet/tokens.json'
 
-const stagingPushNotificationServiceUrl = 'https://safe-notification.staging.gnosisdev.com/api/v1/'
-const stagingTransactionRelayServiceUrl = 'https://safe-relay.staging.gnosisdev.com/api/v1/'
+const stagingPushNotificationServiceUrl = 'https://safe-notification.gnosis.pm/api/v1/' //'https://safe-notification.staging.gnosisdev.com/api/v1/'
+const stagingTransactionRelayServiceUrl = 'https://safe-relay.rinkeby.gnosis.pm/api/v1/' //'https://safe-relay.staging.gnosisdev.com/api/v1/'
 
-const testFirebaseAuthDomain = 'test-safe-notifications.firebaseapp.com'
-const testFirebaseDatabaseUrl = 'https://test-safe-notifications.firebaseio.com'
-const testFirebaseProjectId = 'test-safe-notifications'
-const testFirebaseStorageBucket = 'test-safe-notifications.appspot.com'
-const testFirebaseMessagingSenderId = '64389160972'
+const testFirebaseAuthDomain = 'safe-notifications-prod.firebaseapp.com' //'test-safe-notifications.firebaseapp.com'
+const testFirebaseDatabaseUrl = 'https://safe-notifications-prod.firebaseio.com' //'https://test-safe-notifications.firebaseio.com'
+const testFirebaseProjectId = 'safe-notifications-prod' // 'test-safe-notifications'
+const testFirebaseStorageBucket = 'safe-notifications-prod.appspot.com' // 'test-safe-notifications.appspot.com'
+const testFirebaseMessagingSenderId = '464427835422' // '64389160972'
 
 const envConfig = {
   [PRODUCTION]: {

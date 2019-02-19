@@ -15,7 +15,8 @@ export const networkConfig = {
   [RINKEBY]: {
     [NETWORK_NAME]: 'Rinkeby',
     [NETWORK_VERSION]: 4,
-    [NETWORK_URL]: 'https://rinkeby.infura.io/v3/' + process.env.INFURA_PROJECT_ID
+    //[NETWORK_URL]: 'https://rinkeby.infura.io/v3/' + process.env.INFURA_PROJECT_ID
+    [NETWORK_URL]: 'https://rinkeby.infura.io/ip5Qu2JWrzVWIF36bm8S'
   }
 }
 

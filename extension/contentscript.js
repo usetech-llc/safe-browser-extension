@@ -36,6 +36,13 @@ const activeListeners = (currentSafe) => {
     })
   })
 
+  window.addEventListener(messages.EV_SIGN_MESSAGE, (data) => {
+    chrome.runtime.sendMessage({
+      msg: messages.MSG_SIGN_MESSAGE,
+      msg_data: data.detail
+    })
+  })
+
   chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
       switch (request.msg) {
@@ -50,6 +57,19 @@ const activeListeners = (currentSafe) => {
             }
           )
           window.dispatchEvent(resolvedTransactionEvent)
+          break
+
+        case messages.MSG_MESSAGE_SIGNED:
+          const messageSignedEvent = new window.CustomEvent(
+            messages.EV_MESSAGE_SIGNED,
+            {
+              detail: {
+                original_data: request.original_data,
+                signature: request.signature
+              }
+            }
+          )
+          window.dispatchEvent(messageSignedEvent)
           break
 
         case messages.MSG_UPDATE_CURRENT_SAFE:
